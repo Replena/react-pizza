@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 const HomeDiv = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
   height: 100vh;
   background-image: url("../assets/iteration-1-assets/home-banner.png");
   background-size: cover;
@@ -14,23 +17,26 @@ const HomeDiv = styled.div`
 
 const Title = styled.h1`
   text-align: center;
-  margin: 0;
-  height: 61px;
   color: white;
+  font-size: 4rem;
+  font-weight: 300;
+  font-family: "Barlow";
+  padding-bottom: 5rem;
 `;
 
 const Button = styled(Link)`
   display: flex;
-  max-width: 5rem;
+  font-size: 1rem;
   justify-content: center;
   align-items: center;
   background-color: #fdc913;
   text-decoration: none;
-  color: #000000;
+  color: black;
   font-family: "Barlow";
   font-weight: 600;
-  border-radius: 20px;
-  padding: 1rem;
+  border-radius: 50px;
+  border: none;
+  padding: 1rem 4rem;
 `;
 
 function Home() {

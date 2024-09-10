@@ -2,21 +2,19 @@ Success;
 import styled from "styled-components";
 
 const SuccessWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
   background: #ce2829;
-  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100vh;
 `;
-
 const SuccessText = styled.p`
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   text-align: center;
-  height: 100%;
   font-size: 3rem;
+  color: white;
+  top: 50%;
+  transform: translateY(-50%);
+  position: relative;
 `;
 
 function Success() {
