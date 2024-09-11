@@ -186,13 +186,14 @@ export default function FormOrder() {
               <strong>Boyut Seçimi</strong>
             </p>
             {pizzaData.sizeChoose.map((size, index) => (
-              <div key={index} className="form-check">
+              <div key={index} className="form-check" data-cy="">
                 <Input
                   type="radio"
                   name="size"
                   id={size}
                   onChange={handleRadioChange}
                   value={size}
+                  data-cy={`radio-${size}`}
                 />
                 <Label htmlFor={size}>{size}</Label>
               </div>
@@ -240,13 +241,14 @@ export default function FormOrder() {
                   type="checkbox"
                   id={ingredient}
                   onChange={handleCheckboxChange}
+                  data-cy={`checkbox-${ingredient.id}`}
                 />
                 <Label htmlFor={ingredient}>{ingredient}</Label>
               </div>
             ))}
           </div>
           {error.ingredients && touches.ingredients && (
-            <p className="text-danger">{error.ingredients}</p>
+            <p data-cy="ingredientsError">{error.ingredients}</p>
           )}
         </FormGroup>
 
@@ -261,7 +263,9 @@ export default function FormOrder() {
             onChange={handleNameChange}
           />
           {error.name && touches.name && (
-            <p className="text-danger">{error.name}</p>
+            <p className="text-danger" data-cy="nameError">
+              {error.name}
+            </p>
           )}
         </FormGroup>
 
@@ -310,7 +314,12 @@ export default function FormOrder() {
               </CardBody>
             </Card>
 
-            <Button color="warning" disabled={!isValidate} className="w-100">
+            <Button
+              color="warning"
+              disabled={!isValidate}
+              className="w-100"
+              data-cy="submit"
+            >
               SİPARİŞ VER
             </Button>
           </div>

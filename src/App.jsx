@@ -16,7 +16,6 @@ function App() {
   return (
     <>
       {" "}
-      <GlobalStyle />
       <Header />
       <HeaderNav location={location} />
       <Switch>
