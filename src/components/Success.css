@@ -1,0 +1,12 @@
+.white {
+  color: white;
+}
+.bRed {
+  background-color: #ce2829;
+}
+.yellowText {
+  color: #fdc913;
+  font-family: "Satisfy", cursive;
+  font-size: 2rem;
+  margin: 0;
+}

@@ -7,10 +7,6 @@ import {
   Label,
   Input,
   Button,
-  Card,
-  CardBody,
-  Row,
-  Col,
   Container,
 } from "reactstrap";
 import pizzaData from "./pizzaData.jsx";
@@ -22,6 +18,7 @@ import {
   selectValidate,
   ingredientsValidate,
 } from "./validateForm.jsx";
+import OrderSum from "./OrderSum.jsx";
 
 export default function FormOrder() {
   const [size, setSize] = useState("");
@@ -140,8 +137,6 @@ export default function FormOrder() {
       console.log("Form Hatalı");
       return;
     }
-
-    history.push("/success");
     const formData = {
       name: name,
       quantity: count,
@@ -151,6 +146,10 @@ export default function FormOrder() {
       total: total,
       note: notes,
     };
+    history.push({
+      pathname: "/success",
+      state: { formData: formData },
+    });
     axios
       .post("https://reqres.in/api/pizza", formData)
       .then((response) => {
@@ -298,22 +297,7 @@ export default function FormOrder() {
             </FormGroup>
           </div>
           <div className="col-8">
-            <Card>
-              <CardBody>
-                <p>
-                  <strong>Sipariş Toplamı</strong>
-                </p>
-                <div className="d-flex justify-content-between">
-                  <span>{`Seçimler: `}</span>
-                  <span>{`${ingredients.length * 5}₺`}</span>
-                </div>
-                <div className="d-flex justify-content-between">
-                  <span>{` Toplam: `}</span>
-                  <span>{`${total.toFixed(2)}₺`}</span>
-                </div>
-              </CardBody>
-            </Card>
-
+            <OrderSum ingredients={ingredients} total={total} />
             <Button
               color="warning"
               disabled={!isValidate}
