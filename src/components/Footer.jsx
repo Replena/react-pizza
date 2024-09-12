@@ -1,12 +1,4 @@
-import {
-  Col,
-  Container,
-  Nav,
-  NavbarText,
-  NavItem,
-  NavLink,
-  Row,
-} from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import "./Footer.css";
 const address = [
   `341 Londonderry Road,\n Istanbul Türkiye`,
@@ -27,64 +19,80 @@ const instagramPhotos = [
   "../../Assets/Iteration-2-aseets/footer/insta/li-0.png",
   "../../Assets/Iteration-2-aseets/footer/insta/li-1.png",
   "../../Assets/Iteration-2-aseets/footer/insta/li-2.png",
+  "../../Assets/Iteration-2-aseets/footer/insta/li-3.png",
   "../../Assets/Iteration-2-aseets/footer/insta/li-4.png",
   "../../Assets/Iteration-2-aseets/footer/insta/li-5.png",
 ];
 function Footer() {
   return (
     <>
-      <footer>
-        <div className="w-75 d-flex justify-content-center mt-5">
-          <Container>
-            <div>
+      <footer className="py-5 container-fluid">
+        <Container>
+          <Row>
+            <Col md="4">
               <img
                 src="../../Assets/Iteration-2-aseets/footer/logo-footer.svg"
-                alt=""
+                alt="Teknolojik Yemekler"
               />
-            </div>
-            <div>
-              {address.map((item, i) => {
-                return (
-                  <div key={i} className="d-flex ">
-                    <div className="w-5">
-                      <img
-                        src={`../../Assets/Iteration-2-aseets/footer/icons/icon-${
-                          i + 1
-                        }.png`}
-                      />
-                    </div>
-                    <p>{item}</p>
+              <div className="mt-4">
+                {address.map((item, i) => (
+                  <div key={i} className="d-flex align-items-center mt-3">
+                    <img
+                      src={`../../Assets/Iteration-2-aseets/footer/icons/icon-${
+                        i + 1
+                      }.png`}
+                      alt="Icon"
+                      className="me-2"
+                    />
+                    <p className="m-0">{item}</p>
                   </div>
-                );
-              })}
-            </div>
-          </Container>
+                ))}
+              </div>
+            </Col>
 
-          <Nav>
-            <NavbarText>Hot Menu</NavbarText>
-            {navFooter.map((item, i) => (
-              <NavItem key={i}>
-                <NavLink>{item}</NavLink>
-              </NavItem>
-            ))}
-          </Nav>
-          <div>
-            <p>Instagram</p>
-            {instagramPhotos.map((image, i) => (
-              <img key={i} src={image} />
-            ))}
-          </div>
-        </div>
-        <hr />
+            <Col md="4">
+              <h5 className="topMargin">Hot Menu</h5>
+              <ul className="list-unstyled mt-3">
+                {navFooter.map((item, i) => (
+                  <li key={i} className="my-3">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Col>
 
-        <div className="d-flex justify-content-between">
-          <p className="my-2">© 2023 Teknolojik Yemekler. </p>
+            <Col md="4">
+              <h5 className="topMargin">Instagram</h5>
+              <div className="d-flex flex-wrap justify-content-start mt-3 w-100">
+                {instagramPhotos.map((image, i) => (
+                  <img
+                    key={i}
+                    src={image}
+                    alt={`Instagram ${i}`}
+                    className="img-fluid m-1 w-25 h-25"
+                    style={{ width: "70px", height: "70px" }}
+                  />
+                ))}
+              </div>
+            </Col>
+          </Row>
 
-          <img
-            src="../../Assets/Iteration-2-aseets/footer/twitter-brands-solid.svg"
-            width="25"
-          />
-        </div>
+          <Row>
+            <Col md="12 m-auto">
+              <hr className="my-4" style={{ borderColor: "#4A4A4A" }} />
+
+              <div className="d-flex justify-content-between align-items-center m-auto">
+                <p className="m-0">© 2023 Teknolojik Yemekler. </p>
+                <img
+                  src="../../Assets/Iteration-2-aseets/footer/twitter-brands-solid.svg"
+                  width="25"
+                  alt="Twitter"
+                  className="twitter"
+                />
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </footer>
     </>
   );

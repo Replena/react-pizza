@@ -2,7 +2,12 @@ import "./App.css";
 import Home from "./components/Home.jsx";
 import Success from "./components/Success.jsx";
 import FormOrder from "./components/FormOrder.jsx";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+} from "react-router-dom";
 import Header from "./components/Header.jsx";
 import { createGlobalStyle } from "styled-components";
 import HeaderNav from "./components/Header-Nav.jsx";
@@ -13,11 +18,17 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
+  const imgLocation = useLocation();
   return (
     <>
       {" "}
-      {""}
       <Header />
+      {imgLocation.path === "/order" && (
+        <img
+          src="../Assets/Iteration-2-aseets/pictures/form-banner.png"
+          alt=""
+        />
+      )}
       <HeaderNav location={location} />
       <Switch>
         <Route path="/" exact component={FormOrder} />

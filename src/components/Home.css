@@ -1,3 +1,83 @@
 body {
   background-color: var(--Bej);
 }
+.black {
+  color: black;
+  text-decoration: none;
+}
+.bej {
+  background-color: #faf7f2;
+}
+.satisfy {
+  font-family: "Satisfy", cursive;
+}
+.red {
+  color: red;
+}
+
+.barlow {
+  font-family: "Barlow", sans-serif;
+  font-size: 1.1rem;
+}
+
+.menu-card-text {
+  font-family: "Quattrocento", serif;
+  color: white;
+  font-size: 3.2rem;
+  font-weight: 600;
+}
+.whiteText {
+  color: white;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+.white {
+  background-color: white;
+}
+
+.white-border {
+  background-color: white;
+  padding: 0.8rem 1.3rem;
+  border-radius: 50px;
+}
+.menu-card-button {
+  font-family: "Quattrocento", serif;
+  font-weight: bold;
+  color: white;
+  margin: auto;
+  padding: 13px 21px;
+  font-size: 0.9rem;
+  border: none;
+  text-decoration: none;
+  background-color: white;
+  border-radius: 50px;
+  color: #ce2829;
+}
+.menu-card-secondary {
+  font-family: "Quattrocento", serif;
+  font-weight: bold;
+  font-size: 1.3rem;
+  border-radius: 50px;
+}
+
+.topTitle {
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+  font-weight: 300;
+  font-family: "Barlow";
+  margin-top: 4rem;
+  font-family: "Satisfy", regular;
+  color: #fdc913;
+}
+.menu-card {
+  display: flex;
+  gap: 2rem;
+  border: none;
+}
+
+.item-6:hover {
+  background-color: black;
+  border-radius: 50px;
+  padding: 0.5rem 2rem;
+}

@@ -19,7 +19,7 @@ const pizzaData = {
     "Ananas",
     "Kabak",
   ],
-  sizeChoose: ["küçük", "orta", "büyük"],
+  sizeChoose: ["S", "M", "L"],
   sideSelection: ["ince", "normal", "kalın"],
 };
 

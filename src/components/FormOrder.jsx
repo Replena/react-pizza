@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Footer from "./Footer.jsx";
 import {
   Form,
   FormGroup,
@@ -8,6 +9,8 @@ import {
   Input,
   Button,
   Container,
+  Card,
+  CardBody,
 } from "reactstrap";
 import pizzaData from "./pizzaData.jsx";
 import { useHistory } from "react-router-dom";
@@ -18,8 +21,7 @@ import {
   selectValidate,
   ingredientsValidate,
 } from "./validateForm.jsx";
-import OrderSum from "./OrderSum.jsx";
-
+import "./FormOrder.css";
 export default function FormOrder() {
   const [size, setSize] = useState("");
   const [total, setTotal] = useState(0);
@@ -161,154 +163,187 @@ export default function FormOrder() {
   };
 
   return (
-    <Container
-      fluid
-      className="d-flex justify-content-center align-items-center my-5"
-      style={{ minHeight: "100vh" }}
-    >
-      <Form onSubmit={handleSubmit} className="w-50">
-        <FormGroup>
-          <h4>{pizzaData.name}</h4>
-          <div className="d-flex justify-content-between align-items-center mt-4 mb-3">
-            <strong className="fs-3">{pizzaData.price.toFixed(2)}₺</strong>
-            <div className="text-right col-4 d-flex justify-content-between">
-              <span>{pizzaData.size}</span>
-              <span>{` ${pizzaData.oylayanKisiler}`}</span>
-            </div>
-          </div>
-          <FormText>{pizzaData.text}</FormText>
-        </FormGroup>
-
-        <FormGroup className="d-flex flex-column flex-md-row">
-          <div className="w-100 w-md-75">
-            <p>
-              <strong>Boyut Seçimi</strong>
-            </p>
-            {pizzaData.sizeChoose.map((size, index) => (
-              <div key={index} className="form-check" data-cy="">
-                <Input
-                  type="radio"
-                  name="size"
-                  id={size}
-                  onChange={handleRadioChange}
-                  value={size}
-                  data-cy={`radio-${size}`}
-                />
-                <Label htmlFor={size}>{size}</Label>
+    <>
+      <Container
+        className="d-flex flex-column align-items-center my-5 container-fluid w-50 p-0"
+        style={{ minHeight: "100vh" }}
+      >
+        <img
+          className="order-pizza"
+          src="../../Assets/Iteration-2-aseets/pictures/form-banner.png"
+          alt=""
+        />
+        <Form onSubmit={handleSubmit} className="w-100">
+          <FormGroup className="bej">
+            <h4>{pizzaData.name}</h4>
+            <div className="d-flex justify-content-between align-items-center mt-4 mb-3">
+              <strong className="fs-3">{pizzaData.price.toFixed(2)}₺</strong>
+              <div className="text-right col-4 d-flex justify-content-between">
+                <span>{pizzaData.size}</span>
+                <span>{` ${pizzaData.oylayanKisiler}`}</span>
               </div>
-            ))}
-            {error.size && touches.size && (
-              <p className="text-danger">{error.size}</p>
+            </div>
+            <FormText>{pizzaData.text}</FormText>
+          </FormGroup>
+
+          <FormGroup className="d-flex flex-column flex-md-row">
+            <div className="w-100">
+              <p>
+                <strong>Boyut Seçimi</strong>
+              </p>
+              {pizzaData.sizeChoose.map((size, index) => (
+                <FormGroup
+                  key={index}
+                  className="w-50 d-flex align-items-center"
+                >
+                  <Input
+                    type="radio"
+                    name="size"
+                    id={size}
+                    onChange={handleRadioChange}
+                    value={size}
+                    placeholder={size}
+                    data-cy={`radio-${size}`}
+                  />
+                  <Label htmlFor={size} sm={2}>
+                    {size}
+                  </Label>
+                </FormGroup>
+              ))}
+              {error.size && touches.size && (
+                <p className="text-danger">{error.size}</p>
+              )}
+            </div>
+            <div className="w-100 w-md-25 pl-0 pl-md-3">
+              <Label htmlFor="sideChoose">
+                <strong>Hamur Kalınlığı</strong>
+              </Label>
+              <Input
+                id="sideChoose"
+                name="select"
+                type="select"
+                onChange={handleSelectChange}
+              >
+                <option>Hamur Kalınlığı</option>
+                {pizzaData.sideSelection.map((side, index) => (
+                  <option key={index} value={side} className="bej">
+                    {side}
+                  </option>
+                ))}
+              </Input>
+              {error.select && touches.select && (
+                <p className="text-danger">{error.select}</p>
+              )}
+            </div>
+          </FormGroup>
+
+          <FormGroup>
+            <p>
+              {" "}
+              <strong>Ek Malzemeler</strong>
+            </p>
+            <p>En Fazla 10 malzeme seçebilirsiniz. (5₺)</p>
+            <div className="d-flex flex-wrap">
+              {pizzaData.ingredientsData.map((ingredient, index) => (
+                <div key={index} className="col-4 d-flex gap-1">
+                  <div className="d-flex justify-content-between">
+                    <Input
+                      type="checkbox"
+                      id={ingredient}
+                      onChange={handleCheckboxChange}
+                      data-cy={`checkbox-${ingredient.id}`}
+                      className="check-model"
+                    />
+                  </div>
+                  <div className="ingredients-text">
+                    <Label htmlFor={ingredient}>{ingredient}</Label>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {error.ingredients && touches.ingredients && (
+              <p data-cy="ingredientsError" className="text-danger">
+                {error.ingredients}
+              </p>
             )}
-          </div>
-          <div className="w-100 w-md-25 pl-0 pl-md-3">
-            <Label htmlFor="sideChoose">
-              <strong>Hamur Kalınlığı</strong>
+          </FormGroup>
+
+          <FormGroup>
+            <Label htmlFor="isim">
+              <strong>Adınız Soyadınız:</strong>
             </Label>
             <Input
-              id="sideChoose"
-              name="select"
-              type="select"
-              onChange={handleSelectChange}
-            >
-              <option>Hamur Kalınlığı</option>
-              {pizzaData.sideSelection.map((side, index) => (
-                <option key={index} value={side}>
-                  {side}
-                </option>
-              ))}
-            </Input>
-            {error.select && touches.select && (
-              <p className="text-danger">{error.select}</p>
+              className="bej"
+              type="text"
+              id="isim"
+              placeholder="Lütfen adınızı ve soyadınızı girin"
+              onChange={handleNameChange}
+            />
+            {error.name && touches.name && (
+              <p className="text-danger" data-cy="nameError">
+                {error.name}
+              </p>
             )}
-          </div>
-        </FormGroup>
+          </FormGroup>
 
-        <FormGroup>
-          <p>
+          <FormGroup>
+            <Label htmlFor="order-note">
+              <strong>Sipariş Notunuz:</strong>
+            </Label>
+            <Input
+              className="bej"
+              type="textarea"
+              id="order-note"
+              placeholder="Siparişinizle ilgili notunuzu buraya yazabilirsiniz."
+            />
+          </FormGroup>
+          <div className="my-4">
             {" "}
-            <strong>Ek Malzemeler</strong>
-          </p>
-          <p>
-            En Fazla 10 malzeme seçebilirsiniz. Lütfen en az 4 malzeme seçin
-            (5₺)
-          </p>
-          <div className="d-flex flex-wrap">
-            {pizzaData.ingredientsData.map((ingredient, index) => (
-              <div key={index} className="col-4">
-                <Input
-                  type="checkbox"
-                  id={ingredient}
-                  onChange={handleCheckboxChange}
-                  data-cy={`checkbox-${ingredient.id}`}
-                />
-                <Label htmlFor={ingredient}>{ingredient}</Label>
-              </div>
-            ))}
+            <hr />
           </div>
-          {error.ingredients && touches.ingredients && (
-            <p data-cy="ingredientsError">{error.ingredients}</p>
-          )}
-        </FormGroup>
-
-        <FormGroup>
-          <Label htmlFor="isim">
-            <strong>Adınız Soyadınız:</strong>
-          </Label>
-          <Input
-            type="text"
-            id="isim"
-            placeholder="Lütfen adınızı ve soyadınızı girin"
-            onChange={handleNameChange}
-          />
-          {error.name && touches.name && (
-            <p className="text-danger" data-cy="nameError">
-              {error.name}
-            </p>
-          )}
-        </FormGroup>
-
-        <FormGroup>
-          <Label htmlFor="order-note">
-            <strong>Sipariş Notunuz:</strong>
-          </Label>
-          <Input
-            type="textarea"
-            id="order-note"
-            placeholder="Siparişinizle ilgili notunuzu buraya yazabilirsiniz."
-          />
-        </FormGroup>
-        <div className="my-4">
-          {" "}
-          <hr />
-        </div>
-        <div className="row d-flex">
-          <div className="col-4">
-            <FormGroup className="d-flex justify-content-end align-items-center">
-              <Button color="warning" onClick={minus} className="w-50 p-3">
-                <strong> -</strong>
+          <div className="row d-flex">
+            <div className="col-4">
+              <FormGroup className="d-flex justify-content-end align-items-center">
+                <Button color="warning" onClick={minus} className="w-50 p-3">
+                  <strong> -</strong>
+                </Button>
+                <div className="w-50 d-flex justify-content-center p-3">
+                  <strong>{count}</strong>
+                </div>
+                <Button color="warning" onClick={plus} className="w-50 p-3">
+                  <strong> +</strong>
+                </Button>
+              </FormGroup>
+            </div>
+            <div className="col-8">
+              <Card>
+                <CardBody className="bej">
+                  <p>
+                    <strong>Sipariş Toplamı</strong>
+                  </p>
+                  <div className="d-flex justify-content-between">
+                    <span>{`Seçimler: `}</span>
+                    <span>{`${ingredients.length * 5}₺`}</span>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <span>{` Toplam: `}</span>
+                    <span>{`${total.toFixed(2)}₺`}</span>
+                  </div>
+                </CardBody>
+              </Card>
+              <Button
+                color="warning"
+                disabled={!isValidate}
+                className="w-100"
+                data-cy="submit"
+              >
+                SİPARİŞ VER
               </Button>
-              <div className="w-50 d-flex justify-content-center p-3">
-                <strong>{count}</strong>
-              </div>
-              <Button color="warning" onClick={plus} className="w-50 p-3">
-                <strong> +</strong>
-              </Button>
-            </FormGroup>
+            </div>
           </div>
-          <div className="col-8">
-            <OrderSum ingredients={ingredients} total={total} />
-            <Button
-              color="warning"
-              disabled={!isValidate}
-              className="w-100"
-              data-cy="submit"
-            >
-              SİPARİŞ VER
-            </Button>
-          </div>
-        </div>
-      </Form>
-    </Container>
+        </Form>
+      </Container>
+      <Footer />
+    </>
   );
 }

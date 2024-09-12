@@ -1,0 +1,33 @@
+.bej {
+  background-color: #faf7f2;
+}
+
+.ingredients-text {
+  color: #5f5f5f;
+  font-size: 1rem;
+  width: 100%;
+  font-weight: bold;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.check-model {
+  border: none;
+  background-color: #faf7f2;
+  padding: 20px;
+}
+.check-model:checked {
+  background-color: #fdc913;
+  color: black;
+}
+
+.size-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+col-gap {
+  display: flex;
+  gap: 2rem;
+}
