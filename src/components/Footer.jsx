@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "reactstrap";
 import "./Footer.css";
 const address = [
-  `341 Londonderry Road,\n Istanbul Türkiye`,
+  `341 Londonderry Road,Istanbul Türkiye`,
   "aciktim@teknolojikyemekler.com",
   "+90 216 123 45 67",
 ];
@@ -34,7 +34,7 @@ function Footer() {
                 src="../../Assets/Iteration-2-aseets/footer/logo-footer.svg"
                 alt="Teknolojik Yemekler"
               />
-              <div className="mt-4">
+              <div className="mt-4 d-flex flex-column align-items-start">
                 {address.map((item, i) => (
                   <div key={i} className="d-flex align-items-center mt-3">
                     <img
