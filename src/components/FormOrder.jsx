@@ -22,6 +22,7 @@ import {
   ingredientsValidate,
 } from "./validateForm.jsx";
 import "./FormOrder.css";
+
 export default function FormOrder() {
   const [size, setSize] = useState("");
   const [total, setTotal] = useState(0);
@@ -30,6 +31,7 @@ export default function FormOrder() {
   const [count, setCount] = useState(1);
   const [name, setName] = useState("");
   const [notes, setNotes] = useState("");
+  const [delivery, setDelivery] = useState(false);
   const [error, setError] = useState({
     size: "",
     select: "",
@@ -45,34 +47,42 @@ export default function FormOrder() {
   });
   const history = useHistory();
 
-  const handleRadioChange = (e) => {
-    setSize(e.target.value);
-    setTouches((prev) => ({ ...prev, size: true }));
-  };
-  const handleSelectChange = (e) => {
-    setSelect(e.target.value);
-    setTouches((prev) => ({ ...prev, select: true }));
-  };
+  const handleChange = (e) => {
+    const { name, value, type, checked, id } = e.target;
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-    setTouches((prev) => ({ ...prev, name: true }));
-  };
-  const handleCheckboxChange = (e) => {
-    if (e.target.checked) {
-      setIngredients([...ingredients, e.target.id]);
-    } else {
-      setIngredients(
-        ingredients.filter((ingredient) => ingredient !== e.target.id)
-      );
+    if (type === "radio" && name === "size") {
+      setSize(value);
+      setTouches((prev) => ({ ...prev, size: true }));
     }
-    setTouches((prev) => ({ ...prev, ingredients: true }));
+
+    if (name === "select") {
+      setSelect(value);
+      setTouches((prev) => ({ ...prev, select: true }));
+    }
+
+    if (type === "text" && name === "name") {
+      setName(value);
+      setTouches((prev) => ({ ...prev, name: true }));
+    }
+
+    if (type === "checkbox") {
+      if (name === "teslimat") {
+        setDelivery(checked);
+      } else {
+        if (checked) {
+          setIngredients([...ingredients, id]);
+        } else {
+          setIngredients(ingredients.filter((ingredient) => ingredient !== id));
+        }
+        setTouches((prev) => ({ ...prev, ingredients: true }));
+      }
+    }
   };
 
   const calculateSizePrice = (sizeChoose) => {
     const sizePrice = {
-      orta: 10,
-      büyük: 20,
+      M: 10,
+      L: 20,
     };
     return sizePrice[sizeChoose] || 0;
   };
@@ -84,14 +94,25 @@ export default function FormOrder() {
     };
     return sidePrice[sideSelection] || 0;
   };
+
   useEffect(() => {
+    console.log("Size:", size);
+    console.log("Select:", select);
+    console.log("Ingredients:", ingredients);
+    console.log("Count:", count);
+    console.log("Size Price:", calculateSizePrice(size));
+    console.log("Side Price:", calculateSidePrice(select));
+    console.log("Delivery:", delivery);
+
     const totalCalculate =
       pizzaData.price * count +
       ingredients.length * 5 +
       calculateSidePrice(select) +
-      calculateSizePrice(size);
+      calculateSizePrice(size) +
+      (delivery ? 50 : 0);
+
     setTotal(totalCalculate);
-  }, [size, select, ingredients, count]);
+  }, [size, select, ingredients, count, delivery]);
 
   useEffect(() => {
     let errors = {
@@ -147,6 +168,7 @@ export default function FormOrder() {
       ingredients: ingredients,
       total: total,
       note: notes,
+      delivery: delivery,
     };
     history.push({
       pathname: "/success",
@@ -168,11 +190,6 @@ export default function FormOrder() {
         className="d-flex flex-column align-items-center my-5 container-fluid w-50 p-0"
         style={{ minHeight: "100vh" }}
       >
-        <img
-          className="order-pizza"
-          src="../../Assets/Iteration-2-aseets/pictures/form-banner.png"
-          alt=""
-        />
         <Form onSubmit={handleSubmit} className="w-100">
           <FormGroup className="bej">
             <h4>{pizzaData.name}</h4>
@@ -186,35 +203,34 @@ export default function FormOrder() {
             <FormText>{pizzaData.text}</FormText>
           </FormGroup>
 
-          <FormGroup className="d-flex flex-column flex-md-row">
-            <div className="w-100">
+          <FormGroup className="d-flex flex-md-row justify-content-between">
+            <FormGroup className="size-selection">
               <p>
                 <strong>Boyut Seçimi</strong>
               </p>
-              {pizzaData.sizeChoose.map((size, index) => (
-                <FormGroup
-                  key={index}
-                  className="w-50 d-flex align-items-center"
-                >
-                  <Input
-                    type="radio"
-                    name="size"
-                    id={size}
-                    onChange={handleRadioChange}
-                    value={size}
-                    placeholder={size}
-                    data-cy={`radio-${size}`}
-                  />
-                  <Label htmlFor={size} sm={2}>
-                    {size}
-                  </Label>
-                </FormGroup>
-              ))}
+              <div className="radio-buttons">
+                {pizzaData.sizeChoose.map((size, index) => (
+                  <FormGroup key={index} className="d-flex align-items-center">
+                    <Input
+                      type="radio"
+                      name="size"
+                      id={size}
+                      onChange={handleChange}
+                      value={size}
+                      className="size-radio"
+                      data-cy={`radio-${size}`}
+                    />
+                    <Label htmlFor={size} className="size-label">
+                      {size}
+                    </Label>
+                  </FormGroup>
+                ))}
+              </div>
               {error.size && touches.size && (
                 <p className="text-danger">{error.size}</p>
               )}
-            </div>
-            <div className="w-100 w-md-25 pl-0 pl-md-3">
+            </FormGroup>
+            <div className="side-selection w-50 pl-0 pl-md-3">
               <Label htmlFor="sideChoose">
                 <strong>Hamur Kalınlığı</strong>
               </Label>
@@ -222,11 +238,12 @@ export default function FormOrder() {
                 id="sideChoose"
                 name="select"
                 type="select"
-                onChange={handleSelectChange}
+                onChange={handleChange}
+                className="side-select"
               >
                 <option>Hamur Kalınlığı</option>
                 {pizzaData.sideSelection.map((side, index) => (
-                  <option key={index} value={side} className="bej">
+                  <option key={index} value={side}>
                     {side}
                   </option>
                 ))}
@@ -250,7 +267,7 @@ export default function FormOrder() {
                     <Input
                       type="checkbox"
                       id={ingredient}
-                      onChange={handleCheckboxChange}
+                      onChange={handleChange}
                       data-cy={`checkbox-${ingredient.id}`}
                       className="check-model"
                     />
@@ -276,8 +293,9 @@ export default function FormOrder() {
               className="bej"
               type="text"
               id="isim"
+              name="name"
               placeholder="Lütfen adınızı ve soyadınızı girin"
-              onChange={handleNameChange}
+              onChange={handleChange}
             />
             {error.name && touches.name && (
               <p className="text-danger" data-cy="nameError">
@@ -294,23 +312,45 @@ export default function FormOrder() {
               className="bej"
               type="textarea"
               id="order-note"
+              name="notes"
               placeholder="Siparişinizle ilgili notunuzu buraya yazabilirsiniz."
+              onChange={(e) => setNotes(e.target.value)}
             />
           </FormGroup>
           <div className="my-4">
             {" "}
             <hr />
           </div>
-          <div className="row d-flex">
+
+          <FormGroup className="delivery-wrapper">
+            <Input
+              type="checkbox"
+              id="teslimat"
+              name="teslimat"
+              checked={delivery}
+              onChange={handleChange}
+              data-cy="teslimat"
+              className="delivery-check"
+            />
+            <Label htmlFor="teslimat" className="delivery-label">
+              Teslimat Ücreti (50₺)
+            </Label>
+          </FormGroup>
+
+          <div className="row">
             <div className="col-4">
-              <FormGroup className="d-flex justify-content-end align-items-center">
-                <Button color="warning" onClick={minus} className="w-50 p-3">
+              <FormGroup className="d-flex button-container">
+                <Button
+                  color="warning"
+                  onClick={minus}
+                  className=" button-minus"
+                >
                   <strong> -</strong>
                 </Button>
-                <div className="w-50 d-flex justify-content-center p-3">
+                <div className="d-flex   button-wrapper">
                   <strong>{count}</strong>
                 </div>
-                <Button color="warning" onClick={plus} className="w-50 p-3">
+                <Button color="warning" onClick={plus} className="button-plus">
                   <strong> +</strong>
                 </Button>
               </FormGroup>

@@ -9,26 +9,13 @@ import {
   useLocation,
 } from "react-router-dom";
 import Header from "./components/Header.jsx";
-import { createGlobalStyle } from "styled-components";
 import HeaderNav from "./components/Header-Nav.jsx";
-const GlobalStyle = createGlobalStyle`
-  * {
-    border: 1px solid black;
-  }
-`;
 
 function App() {
   const imgLocation = useLocation();
   return (
     <>
-      {" "}
       <Header />
-      {imgLocation.path === "/order" && (
-        <img
-          src="../Assets/Iteration-2-aseets/pictures/form-banner.png"
-          alt=""
-        />
-      )}
       <HeaderNav location={location} />
       <Switch>
         <Route path="/" exact component={FormOrder} />

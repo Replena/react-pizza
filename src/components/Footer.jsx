@@ -84,7 +84,7 @@ function Footer() {
               <div className="d-flex justify-content-between align-items-center m-auto">
                 <p className="m-0">© 2023 Teknolojik Yemekler. </p>
                 <img
-                  src="../../Assets/Iteration-2-aseets/footer/twitter-brands-solid.svg"
+                  src="../../Assets/Iteration-2-aseets/footer/twitter.svg"
                   width="25"
                   alt="Twitter"
                   className="twitter"
