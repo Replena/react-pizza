@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Footer from "./Footer.jsx";
 import {
   Form,
   FormGroup,
@@ -171,6 +170,7 @@ export default function FormOrder({ setOrderData }) {
       .post("https://reqres.in/api/pizza", formData)
       .then((response) => {
         console.log(response.data);
+        setOrderData(response.data);
       })
       .catch((error) => {
         console.log(error);
