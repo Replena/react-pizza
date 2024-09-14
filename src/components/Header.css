@@ -1,0 +1,28 @@
+.order-header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 4rem 0;
+  z-index: 2;
+}
+
+.bg-red {
+  background: #ce2829;
+}
+
+.no-bg {
+  background: none;
+}
+
+.absolute-position {
+  position: absolute;
+}
+
+.static-position {
+  position: static;
+}
+
+.header-img {
+  max-width: 100%;
+  height: auto;
+}

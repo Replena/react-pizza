@@ -1,0 +1,16 @@
+:root {
+  --Sarı: #fdc913;
+  --Açık-Gri: #5f5f5f;
+  --Koyu-Gri: #292929;
+  --Kırmızı: #ce2829;
+  --Bej: #faf7f2;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#logo {
+  z-index: 100;
+}
